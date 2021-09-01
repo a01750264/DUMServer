@@ -1,0 +1,27 @@
+{
+  "name": "dumserver",
+  "version": "1.0.0",
+  "description": "DUM Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a01750264/DUMServer.git"
+  },
+  "author": "Equipo 4",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a01750264/DUMServer/issues"
+  },
+  "homepage": "https://github.com/a01750264/DUMServer#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.6.5",
+    "tedious": "^12.0.0"
+  }
+}
