@@ -10,4 +10,5 @@ const puerto = 8080;
 
 app.listen(puerto, ()=>{
     console.log(`Servidor en línea en el puerto: ${puerto}`)
+    console.log("hola");
 })
