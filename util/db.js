@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
         }
     },
     define: {
-        timeStamps: false,
+        timestamps: false,
         freezeTableName: true
     }
 });
