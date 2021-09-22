@@ -3,11 +3,13 @@ const path = require('path');
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv');
 dotenv.config()
+const donanteRoutes = require('./routes/donante');
 const app = express();
 const sequelize = require('./util/db');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use('/donante', donanteRoutes);
 
 const puerto = 8080;
 
