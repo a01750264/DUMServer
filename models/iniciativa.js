@@ -24,6 +24,14 @@ const Iniciativa = (sequelize)=>{
             type: Sequelize.INTEGER,
             allowNull: false,
             default: 0
+        },
+        maxParticipantes: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+        },
+        maxDonaciones: {
+            type: Sequelize.FLOAT,
+            allowNull: true
         }
     })
 };
