@@ -27,6 +27,31 @@ exports.getDonantes = (req, res)=>{
 };
 
 
+exports.getInfoDonante = (req, res)=>{
+    Donante.findOne({
+        where: {
+            id: req.userData.donanteId
+        }
+    }).then(donante=>{
+        console.log(donante);
+        return res.status(200).json({
+            donante: {
+                nombre: donante.nombre,
+                apellidoP: donante.apellidoP,
+                apellidoM: donante.apellidoM,
+                email: donante.email,
+                donaciones: donante.donacionesT,
+                userName: donante.userName
+            }
+        });
+    }).catch(err=>{
+        return res.status(500).json({
+            error: err
+        });
+    });
+};
+
+
 exports.postSignUp = (req, res)=>{
     console.log(req.body);
     bcrypt.hash(req.body.donantePass, 10, function(err, hash) {
