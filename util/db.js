@@ -21,7 +21,9 @@ const modelDefiners = [
     require('../models/administrador'),
     require('../models/donacion'),
     require('../models/donante'),
-    require('../models/iniciativa')
+    require('../models/iniciativa'),
+    require('../models/donativo'),
+    require('../models/donacionDonativo')
 ];
 
 for (const modelDefiner of modelDefiners){

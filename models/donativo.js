@@ -1,12 +1,12 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
-const Iniciativa = (sequelize)=>{
-    sequelize.define('iniciativa', {
+const Donativo = (sequelize)=>{
+    sequelize.define('donativo', {
         id: {
             type: Sequelize.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
+            allowNull: false
         },
         nombre: {
             type: Sequelize.STRING(100),
@@ -28,4 +28,4 @@ const Iniciativa = (sequelize)=>{
     })
 };
 
-module.exports = Iniciativa;
+module.exports = Donativo;
