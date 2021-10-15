@@ -236,9 +236,7 @@ exports.getVerDonaciones = (req, res)=>{
                 data.push(json);
             })
             console.log(data);
-            res.status(200).json({
-                data: data
-            });
+            res.status(200).send(data);
         } else {
             res.status(404).json({
                 error: "No donations found"
