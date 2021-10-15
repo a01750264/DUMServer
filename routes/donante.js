@@ -9,5 +9,6 @@ router.get('/verDonaciones', checkAuth, donanteController.getVerDonaciones)
 router.post('/signUp', donanteController.postSignUp);
 router.post('/logIn', donanteController.postLogIn);
 router.post('/donar', checkAuth, donanteController.postDonar);
+router.post('/donarDonativo', checkAuth, donanteController.postDonarDonativo);
 
 module.exports = router;

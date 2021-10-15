@@ -4,12 +4,17 @@ const bodyParser = require('body-parser')
 const dotenv = require('dotenv');
 dotenv.config()
 const donanteRoutes = require('./routes/donante');
+const iniciaticaRoutes = require('./routes/iniciativa');
+const donativoRoutes = require('./routes/donativo');
 const app = express();
 const sequelize = require('./util/db');
+const { appendFileSync } = require('fs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/donante', donanteRoutes);
+app.use('/iniciativa', iniciaticaRoutes);
+app.use('/donativo', donativoRoutes);
 
 const puerto = 8080;
 
