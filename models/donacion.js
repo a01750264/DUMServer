@@ -11,7 +11,12 @@ const Donacion = (sequelize)=>{
         cantidad: {
             type: Sequelize.FLOAT,
             allowNull: false,
-            default: 0.0
+            defaultValue: 0.0
+        },
+        fecha: {
+            type: Sequelize.DATEONLY,
+            allowNull: false,
+            defaultValue: Sequelize.DataTypes.NOW
         }
     })
 };

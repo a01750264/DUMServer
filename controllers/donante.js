@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/db');
 const Donante = sequelize.models.donante;
+const Iniciativa = sequelize.models.iniciativa;
+const Donacion = sequelize.models.donacion;
 const { response } = require('express');
 const sendEmail = require('../util/verif-code');
 const bcrypt = require('bcrypt');
@@ -167,4 +169,47 @@ exports.postLogIn = (req, res)=>{
             });
         }
     });
+};
+
+exports.postDonar = (req, res)=>{
+    Donante.findOne({
+        where: {
+            id: req.userData.donanteId
+        }
+    }).then(donante=>{
+        Iniciativa.findOne({
+            where: {
+                id: req.body.donacionIniciativa
+            }
+        }).then(iniciativa=>{
+            if (iniciativa != null)
+            {
+                Donacion.create({
+                    cantidad: req.body.donacionCantidad,
+                    donanteId: donante.id,
+                    iniciativaId: iniciativa.id
+                }).then(resultado=>{
+                    console.log(resultado);
+                    console.log("Donation Received");
+                    return res.status(200).json({
+                        message: "Donation received"
+                    });
+                }).catch(err=>{
+                    console.log(err);
+                    res.status(500).json({
+                        error: err
+                    });
+                })
+            } else {
+                res.status(404).json({
+                    error: "Iniciativa does not exist"
+                })
+            }
+        }).catch(err=>{
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        })
+    })
 };
