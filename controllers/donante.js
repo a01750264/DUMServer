@@ -213,3 +213,41 @@ exports.postDonar = (req, res)=>{
         })
     })
 };
+
+exports.getVerDonaciones = (req, res)=>{
+    Donacion.findAll({
+        where: {
+            donanteId: req.userData.donanteId
+        },
+        include: [{
+            model: Iniciativa,
+            attributes: ["nombre"]
+        }]
+    }).then(donaciones=>{
+        if (donaciones != null)
+        {
+            var data = []
+            donaciones.forEach(donacion=>{
+                var json = {
+                    "title": donacion.dataValues["iniciativa"]["nombre"],
+                    "quantity": donacion.dataValues["cantidad"],
+                    "date": donacion.dataValues["fecha"]
+                }
+                data.push(json);
+            })
+            console.log(data);
+            res.status(200).json({
+                data: data
+            });
+        } else {
+            res.status(404).json({
+                error: "No donations found"
+            })
+        }
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    })
+}
