@@ -39,14 +39,13 @@ exports.getInfoDonante = (req, res)=>{
     }).then(donante=>{
         console.log(donante);
         return res.status(200).json({
-            donante: {
                 nombre: donante.nombre,
                 apellidoP: donante.apellidoP,
                 apellidoM: donante.apellidoM,
                 email: donante.email,
                 donaciones: donante.donacionesT,
-                userName: donante.userName
-            }
+                userName: donante.userName,
+                fecha_registro: donante.fecha_registro
         });
     }).catch(err=>{
         return res.status(500).json({

@@ -42,6 +42,11 @@ const Donante = (sequelize)=>{
             type: Sequelize.FLOAT,
             allowNull: false,
             defaultValue: 0.0
+        },
+        fecha_registro: {
+            type: Sequelize.DATEONLY,
+            allowNull: false,
+            defaultValue: Sequelize.DataTypes.NOW
         }
     })
 };

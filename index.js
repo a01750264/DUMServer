@@ -20,7 +20,7 @@ app.use('/donativo', donativoRoutes);
 
 const puerto = 8080;
 
-sequelize.sync({force:false})
+sequelize.sync({force:true})
     .then(resultado=>{
         console.log("¡Conexión a base de datos exitosa!");
         app.listen(puerto, ()=>console.log(`Servidor en línea en el puerto: ${puerto}`));
