@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const donativoController = require('../controllers/donativo');
+const checkAuth = require('../util/check-auth');
 
 router.get('/verDonativos', donativoController.getVerDonativos);
-router.post('/crearDonativo', donativoController.postCrearDonativo);
-router.delete('/borrarDonativo', donativoController.deleteDonativo);
+router.post('/crearDonativo', checkAuth, donativoController.postCrearDonativo);
+router.delete('/borrarDonativo', checkAuth, donativoController.deleteDonativo);
 
 module.exports = router;
