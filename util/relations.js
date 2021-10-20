@@ -5,6 +5,7 @@ function applyRelations(sequelize){
     const Iniciativa = sequelize.models.iniciativa;
     const DonacionDonativo = sequelize.models.donacionDonativo;
     const Donativo = sequelize.models.donativo
+    const Propuesta = sequelize.models.propuesta
 
     Donante.hasMany(Donacion);
     Donante.hasMany(DonacionDonativo);
@@ -16,6 +17,9 @@ function applyRelations(sequelize){
 
     Donativo.hasMany(DonacionDonativo);
     DonacionDonativo.belongsTo(Donativo);
+
+    Donante.hasMany(Propuesta);
+    Propuesta.belongsTo(Donante);
 };
 
 module.exports = {applyRelations};

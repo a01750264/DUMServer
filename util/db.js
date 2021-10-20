@@ -23,7 +23,8 @@ const modelDefiners = [
     require('../models/donante'),
     require('../models/iniciativa'),
     require('../models/donativo'),
-    require('../models/donacionDonativo')
+    require('../models/donacionDonativo'),
+    require('../models/propuesta')
 ];
 
 for (const modelDefiner of modelDefiners){

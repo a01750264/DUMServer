@@ -7,6 +7,7 @@ const donanteRoutes = require('./routes/donante');
 const administradorRoutes = require('./routes/administrador');
 const iniciaticaRoutes = require('./routes/iniciativa');
 const donativoRoutes = require('./routes/donativo');
+const propuestaRoutes = require('./routes/propuesta');
 const app = express();
 const sequelize = require('./util/db');
 const { appendFileSync } = require('fs');
@@ -17,6 +18,7 @@ app.use('/donante', donanteRoutes);
 app.use('/administrador',administradorRoutes);
 app.use('/iniciativa', iniciaticaRoutes);
 app.use('/donativo', donativoRoutes);
+app.use('/propuesta', propuestaRoutes);
 
 const puerto = 8080;
 
