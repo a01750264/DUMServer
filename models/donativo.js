@@ -20,11 +20,7 @@ const Donativo = (sequelize)=>{
             type: Sequelize.INTEGER,
             allowNull: false,
             defaultValue: 0
-        },
-        maxParticipantes: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-        },
+        }
     })
 };
 
