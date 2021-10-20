@@ -28,6 +28,30 @@ exports.getVerDonativos = (req, res)=>{
 };
 
 
+exports.getDonativo = (req, res)=>{
+    Donativo.findOne({
+        where: {
+            id: req.body.donativoId
+        }
+    }).then(donativo=>{
+        if (donativo != null)
+        {
+            console.log(donativo.dataValues);
+            res.status(200).send(donativo.dataValues);
+        } else {
+            res.status(404).json({
+                error: "Donativo not found"
+            });
+        };
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
+};
+
+
 exports.postCrearDonativo = (req, res)=>{
     Donativo.create({
         nombre: req.body.nombreDonativo,

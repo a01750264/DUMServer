@@ -29,6 +29,29 @@ exports.getVerIniciativas = (req, res)=>{
 };
 
 
+exports.getIniciativa = (req, res)=>{
+    Iniciativa.findOne({
+        where: {
+            id: req.body.iniciativaId
+        }
+    }).then(iniciativa=>{
+        if (iniciativa != null)
+        {
+            res.status(200).send(iniciativa.dataValues)
+        } else {
+            res.status(404).json({
+                error: "Iniciativa not found"
+            });
+        };
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
+};
+
+
 exports.postCrearIniciativa = (req, res)=>{
     Iniciativa.create({
         nombre: req.body.nombreIniciativa,
