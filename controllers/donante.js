@@ -55,6 +55,95 @@ exports.getInfoDonante = (req, res)=>{
 };
 
 
+exports.getVerDonaciones = (req, res)=>{
+    Donacion.findAll({
+        where: {
+            donanteId: req.userData.donanteId
+        },
+        include: [{
+            model: Iniciativa,
+            attributes: ["nombre"]
+        }]
+    }).then(donaciones=>{
+        DonacionDonativo.findAll({
+            where: {
+                donanteId: req.userData.donanteId
+            },
+            include: [{
+                model: Donativo,
+                attributes: ["nombre"]
+            }]
+        }).then(donacionesDonativos=>{
+            if (donaciones != null)
+            {
+                if (donacionesDonativos != null)
+                {
+                    var data = []
+                    donaciones.forEach(donacion=>{
+                        var json = {
+                            "title": donacion.dataValues["iniciativa"]["nombre"],
+                            "quantity": donacion.dataValues["cantidad"],
+                            "date": donacion.dataValues["fecha"]
+                        }
+                        data.push(json);
+                    });
+
+                    donacionesDonativos.forEach(donacionDonativo=>{
+                        var json = {
+                            "title": donacionDonativo.dataValues["donativo"]["nombre"],
+                            "quantity": donacionDonativo.dataValues["cantidad"],
+                            "date": donacionDonativo.dataValues["fecha"]
+                        }
+                        data.push(json);
+                    });
+                    console.log(data);
+                    res.status(200).send(data);
+                } else {
+                    var data = []
+                    donaciones.forEach(donacion=>{
+                        var json = {
+                            "title": donacion.dataValues["iniciativa"]["nombre"],
+                            "quantity": donacion.dataValues["cantidad"],
+                            "date": donacion.dataValues["fecha"]
+                        }
+                        data.push(json);
+                    })
+                    console.log(data);
+                    res.status(200).send(data);
+                }
+            } else if (donacionesDonativos != null)
+            {
+                var data = [];
+                donacionesDonativos.forEach(donacionDonativo=>{
+                        var json = {
+                            "title": donacionDonativo.dataValues["donativo"]["nombre"],
+                            "quantity": donacionDonativo.dataValues["cantidad"],
+                            "date": donacion.dataValues["fecha"]
+                        }
+                        data.push(json);
+                    });
+                    console.log(data);
+                    res.status(200).send(data);
+            } else {
+                res.status(404).json({
+                    error: "No donations found"
+                });
+            }
+        }).catch(err=>{
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
+};
+
+
 exports.postSignUp = (req, res)=>{
     console.log(req.body);
     bcrypt.hash(req.body.donantePass, 10, function(err, hash) {
@@ -261,90 +350,3 @@ exports.postDonarDonativo = (req, res)=>{
 };
 
 
-exports.getVerDonaciones = (req, res)=>{
-    Donacion.findAll({
-        where: {
-            donanteId: req.userData.donanteId
-        },
-        include: [{
-            model: Iniciativa,
-            attributes: ["nombre"]
-        }]
-    }).then(donaciones=>{
-        DonacionDonativo.findAll({
-            where: {
-                donanteId: req.userData.donanteId
-            },
-            include: [{
-                model: Donativo,
-                attributes: ["nombre"]
-            }]
-        }).then(donacionesDonativos=>{
-            if (donaciones != null)
-            {
-                if (donacionesDonativos != null)
-                {
-                    var data = []
-                    donaciones.forEach(donacion=>{
-                        var json = {
-                            "title": donacion.dataValues["iniciativa"]["nombre"],
-                            "quantity": donacion.dataValues["cantidad"],
-                            "date": donacion.dataValues["fecha"]
-                        }
-                        data.push(json);
-                    });
-
-                    donacionesDonativos.forEach(donacionDonativo=>{
-                        var json = {
-                            "title": donacionDonativo.dataValues["donativo"]["nombre"],
-                            "quantity": donacionDonativo.dataValues["cantidad"],
-                            "date": donacionDonativo.dataValues["fecha"]
-                        }
-                        data.push(json);
-                    });
-                    console.log(data);
-                    res.status(200).send(data);
-                } else {
-                    var data = []
-                    donaciones.forEach(donacion=>{
-                        var json = {
-                            "title": donacion.dataValues["iniciativa"]["nombre"],
-                            "quantity": donacion.dataValues["cantidad"],
-                            "date": donacion.dataValues["fecha"]
-                        }
-                        data.push(json);
-                    })
-                    console.log(data);
-                    res.status(200).send(data);
-                }
-            } else if (donacionesDonativos != null)
-            {
-                var data = [];
-                donacionesDonativos.forEach(donacionDonativo=>{
-                        var json = {
-                            "title": donacionDonativo.dataValues["donativo"]["nombre"],
-                            "quantity": donacionDonativo.dataValues["cantidad"],
-                            "date": donacion.dataValues["fecha"]
-                        }
-                        data.push(json);
-                    });
-                    console.log(data);
-                    res.status(200).send(data);
-            } else {
-                res.status(404).json({
-                    error: "No donations found"
-                });
-            }
-        }).catch(err=>{
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-    }).catch(err=>{
-        console.log(err);
-        res.status(500).json({
-            error: err
-        });
-    });
-};
