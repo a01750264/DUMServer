@@ -28,7 +28,7 @@ exports.getVerDonativos = (req, res)=>{
 };
 
 
-exports.getDonativo = (req, res)=>{
+exports.postVerDonativo = (req, res)=>{
     Donativo.findOne({
         where: {
             id: req.body.donativoId

@@ -29,7 +29,7 @@ exports.getVerIniciativas = (req, res)=>{
 };
 
 
-exports.getIniciativa = (req, res)=>{
+exports.postVerIniciativa = (req, res)=>{
     Iniciativa.findOne({
         where: {
             id: req.body.iniciativaId
