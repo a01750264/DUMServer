@@ -25,11 +25,6 @@ const Donante = (sequelize)=>{
             allowNull: false,
             unique: true
         },
-        userName: {
-            type: Sequelize.STRING(15),
-            allowNull: false,
-            unique: true
-        },
         password: {
             type: Sequelize.STRING(255),
             allowNull: false

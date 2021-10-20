@@ -6,7 +6,6 @@ const Donacion = sequelize.models.donacion;
 const Donativo = sequelize.models.donativo;
 const DonacionDonativo = sequelize.models.donacionDonativo;
 const { response } = require('express');
-const sendEmail = require('../util/verif-code');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -153,19 +152,16 @@ exports.postSignUp = (req, res)=>{
                 error: err
             })
         } else {
-            code = Math.floor(Math.random() * (9999 - 1000)) + 1000;
             Donante.create({
                 nombre: req.body.donanteNombre,
                 apellidoP: req.body.donanteApellidoP,
                 apellidoM: req.body.donanteApellidoM,
                 email: req.body.donanteEmail,
-                userName: req.body.donanteUserName,
                 password: hash,
                 fecha_nacimiento: req.body.donanteFecha
             }).then(resultado=>{
                 console.log(resultado);
                 console.log("Registro exitoso");
-                sendEmail(req.body.donanteEmail, code)
                 return res.status(200).json({
                     message: "Register successful"
                 });
@@ -188,45 +184,8 @@ exports.postLogIn = (req, res)=>{
     }).then(donante=>{
         if (donante == null)
         {
-            Donante.findOne({
-                where: {
-                    userName: req.body.donanteData
-                }
-            }).then(donante=>{
-                if (donante == null)
-                {
-                    return res.status(401).json({
-                        error: "Authentication failed"
-                    });
-                }
-                bcrypt.compare(req.body.donantePassword, donante.password, function(err, result){
-                    if (err)
-                    {
-                        console.log(err);
-                        return res.status(500).json({
-                            error: err
-                        });
-                    }
-                    if (result)
-                    {
-                        const payload = {
-                            donanteEmail: donante.email,
-                            donanteId: donante.id,
-                            donanteUserName: donante.userName
-                        }
-                        const token  = jwt.sign(payload, process.env.JWT_SECRET, {
-                            expiresIn: process.env.JWT_EXPIRES_IN
-                        });
-                        return res.status(200).json({
-                            message: "Authentication successfull",
-                            token: token
-                        });
-                    } else {
-                        return res.status(401).json({
-                            error: "Authentication failed"
-                        });
-                    }
-                });
+            return res.status(401).json({
+                error: "Authentication failed"
             });
         } else {
             bcrypt.compare(req.body.donantePassword, donante.password, function(err, result){
@@ -242,7 +201,6 @@ exports.postLogIn = (req, res)=>{
                     const payload = {
                         donanteEmail: donante.email,
                         donanteId: donante.id,
-                        donanteUserName: donante.userName
                     }
                     const token = jwt.sign(payload, process.env.JWT_SECRET, {
                         expiresIn: process.env.JWT_EXPIRES_IN
